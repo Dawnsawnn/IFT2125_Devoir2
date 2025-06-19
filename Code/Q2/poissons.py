@@ -1,57 +1,47 @@
-# Nom, Matricule
-# Nom, Matricule
+# Jérémie Dupuis, 20276905
+# Samuel Michaud, 20244446
 
 import sys
 
 def read(input_file):
-    """Fonctions pour lire dans les fichier. Vous pouvez les modifier,
-    faire du parsing, rajouter une valeur de retour, mais n'utilisez pas
-    d'autres librairies.
-    Functions to read in files. you can modify them, do some parsing,
-    add a return value, but don't use other librairies"""
-
+    """Fonction pour lire un fichier."""
     file = open(input_file, "r")
     lines = file.readlines()
     file.close()
 
-    # TODO: Compléter ici/Complete here
-    # traiter les lignes du fichier pour le problème
-    # process the file lines for the problem
+    n = int(lines[0])
 
+    fish = list(map(lambda n: int(n), lines[1].split(" ")))
+
+    if len(fish) != n: raise ValueError(f"Le nombre de poissons ne correspond pas à {n}.")
+
+    return fish
 
 
 def write(str_content, output_file):
-    """Fonctions pour écrire dans un fichier. Vous pouvez la modifier,
-    faire du parsing, rajouter une valeur de retour, mais n'utilisez pas
-    d'autres librairies.
-    Functions to read in files. you can modify them, do some parsing,
-    add a return value, but don't use other librairies"""
-
+    """Fonction pour écrire dans un fichier."""
     file = open(output_file, "w")
     file.write(str_content)
     file.close()
 
 
-
-#Ceci est la fonction que nous appelerons pour tester
-#Assurez-vous qu'elle retourne la réponse!
-#
-#This is the function we will call to test, make sure it
-#returns the answer!
 def main(args):
-    """Fonction main/Main function"""
+    """Fonction main"""
     input_file = args[0]
     output_file = args[1]
-    data = read(input_file)
+    fish = read(input_file)
 
-    #TODO : Completer ici/Complete here
-    #Vous pouvez créer de nouvelles fonctions
-    #You may create new functions
+    pairs = 0
 
-    
-    
+    # Solution naïve
+    for i in range(len(fish)):
+        F = fish[i]
+        for f in fish[i+1:]:
+            if f < F/2: pairs += 1
+
+    write(str(pairs), output_file)
+
 
 # NE PAS TOUCHER
-# DO NOT TOUCH
 if __name__ == "__main__":
     main(sys.argv[1:])
