@@ -4,53 +4,68 @@
 import sys
 
 def read(input_file):
-    """Fonctions pour lire dans les fichier. Vous pouvez les modifier,
-    faire du parsing, rajouter une valeur de retour, mais n'utilisez pas
-    d'autres librairies.
-    Functions to read in files. you can modify them, do some parsing,
-    add a return value, but don't use other librairies"""
-
     file = open(input_file, "r")
     lines = file.readlines()
     file.close()
-
-    # TODO: Compléter ici/Complete here
-    # traiter les lignes du fichier pour le problème
-    # process the file lines for the problem
-
+    n = int(lines[0])
+    points = [tuple(map(int, line.split())) for line in lines[1:n+1]]
+    return n, points
 
 def write(str_content, output_file):
-    """Fonctions pour écrire dans un fichier. Vous pouvez la modifier,
-    faire du parsing, rajouter une valeur de retour, mais n'utilisez pas
-    d'autres librairies.
-    Functions to read in files. you can modify them, do some parsing,
-    add a return value, but don't use other librairies"""
-
     file = open(output_file, "w")
     file.write(str_content)
     file.close()
 
+"""def placerFrites(n, pts, k):
+    orientation = [0] * n
+    
+    while True:
+        ok = True
+        for a in range(n):
+            x, y = pts[a]
+            r = orientation[a]
+            for b in range(a):
+                x2, y2 = pts[b]
+                r2 = orientation[b]
+                # conflit H–H sur même ligne
+                if r == r2 == 0 and y == y2 and abs(x - x2) <= 2*k:
+                    ok = False
+                    break
+                # conflit V–V sur même colonne
+                if r == r2 == 1 and x == x2 and abs(y - y2) <= 2*k:
+                    ok = False
+                    break
+            if not ok:
+                break
+        if ok:
+            return True
+
+"""
+
 
     
 
-#Ceci est la fonction que nous appelerons pour tester
-#Assurez-vous qu'elle retourne la réponse!
-#
-#This is the function we will call to test, make sure it
-#returns the answer!
+def max_k(n, points):
+    # Infini?
+    if placerFrites(n, points, 10**9):
+        return "infini"
+    # Recherche binaire
+    left, right, best = 0, 10**9, 0
+    while left <= right:
+        mid = (left + right) // 2
+        if placerFrites(n, points, mid):
+            best = mid
+            left = mid + 1
+        else:
+            right = mid - 1
+    return str(best) if best > 0 else "0"
+
 def main(args):
-    """Fonction main/Main function"""
-    input_file = args[0]
-    output_file = args[1]
-    data = read(input_file)
-
-    #TODO : Completer ici/Complete here
-    #Vous pouvez créer de nouvelles fonctions
-    #You may create new functions
-    
-    
+    input_file, output_file = args
+    n, points = read(input_file)
+    res = max_k(n, points)
+    write(res, output_file)
 
 # NE PAS TOUCHER
-# DO NOT TOUCH
 if __name__ == "__main__":
     main(sys.argv[1:])
