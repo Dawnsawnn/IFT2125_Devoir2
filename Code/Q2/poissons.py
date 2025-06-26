@@ -4,7 +4,7 @@
 import sys
 
 def read(input_file):
-    """Fonction pour lire un fichier."""
+
     file = open(input_file, "r")
     lines = file.readlines()
     file.close()
@@ -19,7 +19,7 @@ def read(input_file):
 
 
 def write(str_content, output_file):
-    """Fonction pour écrire dans un fichier."""
+
     file = open(output_file, "w")
     file.write(str_content)
     file.close()
@@ -27,29 +27,45 @@ def write(str_content, output_file):
 
 def count_pairs(fish):
 
-    def sort_count(fish):
-        if len(fish) <= 1:
-            return 0, fish
-        mid = len(fish) // 2
-        counter_left, left = sort_count(fish[:mid])
-        counter_right, right = sort_count(fish[mid:])
-        counter_both, merged = merge_count(left, right)
-        return counter_left + counter_right + counter_both, merged
+    if len(fish) <= 1:
+        return 0
 
-    def merge_count(left, right):
-        counter = 0
-        j = 0
-        for i in range(len(left)):
-            while j < len(right) and left[i] > 2 * right[j]:
-                j += 1
-            counter += j
-        merged = []
-        i = 0
-        j = 0
-        while
+    mid = len(fish) // 2
+    left = fish[:mid]
+    right = fish[mid:]
+
+    counter_left = count_pairs(left)
+    counter_right = count_pairs(right)
+    counter_both = 0
+
+    j = 0
+
+    for i in range(len(left)):
+
+        while j < len(right) and left[i] > 2 * right[j]:
+            j += 1
+        counter_both += j
+
+    merged = []
+    i = j = 0
+
+    while i < len(left) and j < len(right):
+        if left[i] <= right[j]:
+            merged.append(left[i])
+            i += 1
+        else:
+            merged.append(right[j])
+            j += 1
+            
+    merged.extend(left[i:])
+    merged.extend(right[j:])
+
+    fish[:] = merged  
+    return counter_left + counter_right + counter_both
+
 
 def main(args):
-    """Fonction main"""
+
     input_file = args[0]
     output_file = args[1]
     fish = read(input_file)
