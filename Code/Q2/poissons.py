@@ -25,19 +25,37 @@ def write(str_content, output_file):
     file.close()
 
 
+def count_pairs(fish):
+
+    def sort_count(fish):
+        if len(fish) <= 1:
+            return 0, fish
+        mid = len(fish) // 2
+        counter_left, left = sort_count(fish[:mid])
+        counter_right, right = sort_count(fish[mid:])
+        counter_both, merged = merge_count(left, right)
+        return counter_left + counter_right + counter_both, merged
+
+    def merge_count(left, right):
+        counter = 0
+        j = 0
+        for i in range(len(left)):
+            while j < len(right) and left[i] > 2 * right[j]:
+                j += 1
+            counter += j
+        merged = []
+        i = 0
+        j = 0
+        while
+
 def main(args):
     """Fonction main"""
     input_file = args[0]
     output_file = args[1]
     fish = read(input_file)
 
-    pairs = 0
+    pairs = count_pairs(fish)
 
-    # Solution naïve
-    for i in range(len(fish)):
-        F = fish[i]
-        for f in fish[i+1:]:
-            if f < F/2: pairs += 1
 
     write(str(pairs), output_file)
 
