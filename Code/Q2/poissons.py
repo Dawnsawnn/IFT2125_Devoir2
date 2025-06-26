@@ -24,7 +24,7 @@ def write(str_content, output_file):
     file.write(str_content)
     file.close()
 
-
+# Implémentation de Merge Sort basée sur https://www.w3schools.com/dsa/dsa_algo_mergesort.php
 def count_pairs(fish):
 
     if len(fish) <= 1:
@@ -56,7 +56,7 @@ def count_pairs(fish):
         else:
             merged.append(right[j])
             j += 1
-            
+
     merged.extend(left[i:])
     merged.extend(right[j:])
 
