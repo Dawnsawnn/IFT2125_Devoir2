@@ -24,31 +24,37 @@ def write(str_content, output_file):
     file.write(str_content)
     file.close()
 
-# Implémentation de Merge Sort basée sur https://www.w3schools.com/dsa/dsa_algo_mergesort.php
+# Implémentation de Merge Sort modifiée pour compter le nombre de paires de poissons.
+# Basée sur https://www.w3schools.com/dsa/dsa_algo_mergesort.php
 def count_pairs(fish):
 
+    # Si la liste a 0 ou 1 élément, il n'y a pas de paires 
     if len(fish) <= 1:
         return 0
 
+    # Divise la liste en deux moitiés
     mid = len(fish) // 2
     left = fish[:mid]
     right = fish[mid:]
 
+    # Appels récursifs sur chaque moitié
     counter_left = count_pairs(left)
     counter_right = count_pairs(right)
+    # Compte les paires entre les deux moitiés
     counter_both = 0
 
     j = 0
-
+    # Compte les paires entre les deux moitiés
     for i in range(len(left)):
 
         while j < len(right) and left[i] > 2 * right[j]:
             j += 1
         counter_both += j
 
+
     merged = []
     i = j = 0
-
+    # Fusionne les deux sous-listes triées en une seule liste triée
     while i < len(left) and j < len(right):
         if left[i] <= right[j]:
             merged.append(left[i])
@@ -59,8 +65,9 @@ def count_pairs(fish):
 
     merged.extend(left[i:])
     merged.extend(right[j:])
-
-    fish[:] = merged  
+    fish[:] = merged
+    
+    # Retourne le nombre total de paires 
     return counter_left + counter_right + counter_both
 
 
