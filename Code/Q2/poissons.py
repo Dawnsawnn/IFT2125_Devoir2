@@ -4,7 +4,6 @@
 import sys
 
 def read(input_file):
-
     file = open(input_file, "r")
     lines = file.readlines()
     file.close()
@@ -27,8 +26,7 @@ def write(str_content, output_file):
 # Implémentation de Merge Sort modifiée pour compter le nombre de paires de poissons.
 # Basée sur https://www.w3schools.com/dsa/dsa_algo_mergesort.php
 def count_pairs(fish):
-
-    # Si la liste a 0 ou 1 élément, il n'y a pas de paires 
+    # Si la liste a 0 ou 1 élément, il n'y a pas de paires
     if len(fish) <= 1:
         return 0
 
@@ -51,7 +49,6 @@ def count_pairs(fish):
             j += 1
         counter_both += j
 
-
     merged = []
     i = j = 0
     # Fusionne les deux sous-listes triées en une seule liste triée
@@ -66,19 +63,17 @@ def count_pairs(fish):
     merged.extend(left[i:])
     merged.extend(right[j:])
     fish[:] = merged
-    
-    # Retourne le nombre total de paires 
+
+    # Retourne le nombre total de paires
     return counter_left + counter_right + counter_both
 
 
 def main(args):
-
     input_file = args[0]
     output_file = args[1]
     fish = read(input_file)
 
     pairs = count_pairs(fish)
-
 
     write(str(pairs), output_file)
 
